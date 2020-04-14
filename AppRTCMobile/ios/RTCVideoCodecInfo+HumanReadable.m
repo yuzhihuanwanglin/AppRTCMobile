@@ -10,42 +10,27 @@
 
 #import "RTCVideoCodecInfo+HumanReadable.h"
 
-//#import <WebRTC/RTCH264ProfileLevelId.h>
+#import <WebRTC/RTCH264ProfileLevelId.h>
 
 @implementation RTCVideoCodecInfo (HumanReadable)
 
-//- (NSString *)humanReadableDescription {
-//  if ([self.name isEqualToString:@"H264"]) {
-//    NSString *profileId = self.parameters[@"profile-level-id"];
-//    RTCH264ProfileLevelId *profileLevelId =
-//        [[RTCH264ProfileLevelId alloc] initWithHexString:profileId];
-//    if (profileLevelId.profile == RTCH264ProfileConstrainedHigh ||
-//        profileLevelId.profile == RTCH264ProfileHigh) {
-//      return @"H264 (High)";
-//    } else if (profileLevelId.profile == RTCH264ProfileConstrainedBaseline ||
-//               profileLevelId.profile == RTCH264ProfileBaseline) {
-//      return @"H264 (Baseline)";
-//    } else {
-//      return [NSString stringWithFormat:@"H264 (%@)", profileId];
-//    }
-//  } else {
-//    return self.name;
-//  }
-//}
-
 - (NSString *)humanReadableDescription {
-    if ([self.name isEqualToString:@"H264"]) {
-        NSString *profileId = self.parameters[@"profile-level-id"];
-        if ([profileId isEqualToString:@"640c1f"]) {
-            return @"H264 (High)";
-        } else if ([profileId isEqualToString:@"42e01f"]) {
-            return @"H264 (Baseline)";
-        } else {
-            return [NSString stringWithFormat:@"H264 (%@)", profileId];
-        }
+  if ([self.name isEqualToString:@"H264"]) {
+    NSString *profileId = self.parameters[@"profile-level-id"];
+    RTCH264ProfileLevelId *profileLevelId =
+        [[RTCH264ProfileLevelId alloc] initWithHexString:profileId];
+    if (profileLevelId.profile == RTCH264ProfileConstrainedHigh ||
+        profileLevelId.profile == RTCH264ProfileHigh) {
+      return @"H264 (High)";
+    } else if (profileLevelId.profile == RTCH264ProfileConstrainedBaseline ||
+               profileLevelId.profile == RTCH264ProfileBaseline) {
+      return @"H264 (Baseline)";
     } else {
-        return self.name;
+      return [NSString stringWithFormat:@"H264 (%@)", profileId];
     }
+  } else {
+    return self.name;
+  }
 }
 
 @end

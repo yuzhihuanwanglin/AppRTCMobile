@@ -13,7 +13,9 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import <WebRTC/RTCEAGLVideoView.h>
+#if defined(RTC_SUPPORTS_METAL)
 #import <WebRTC/RTCMTLVideoView.h>
+#endif
 
 #import "UIImage+ARDUtilities.h"
 
@@ -23,7 +25,7 @@ static CGFloat const kLocalVideoViewSize = 120;
 static CGFloat const kLocalVideoViewPadding = 8;
 static CGFloat const kStatusBarHeight = 20;
 
-@interface ARDVideoCallView () <RTCEAGLVideoViewDelegate>
+@interface ARDVideoCallView () <RTCVideoViewDelegate>
 @end
 
 @implementation ARDVideoCallView {
@@ -173,10 +175,10 @@ static CGFloat const kStatusBarHeight = 20;
       CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
 }
 
-#pragma mark - RTCEAGLVideoViewDelegate
+#pragma mark - RTCVideoViewDelegate
 
-- (void)videoView:(RTCEAGLVideoView*)videoView didChangeVideoSize:(CGSize)size {
- if (videoView == _remoteVideoView) {
+- (void)videoView:(id<RTCVideoRenderer>)videoView didChangeVideoSize:(CGSize)size {
+  if (videoView == _remoteVideoView) {
     _remoteVideoSize = size;
   }
   [self setNeedsLayout];
